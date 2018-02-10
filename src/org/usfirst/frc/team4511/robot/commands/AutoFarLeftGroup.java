@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCloseLeftGroup extends CommandGroup {
-	
-    public AutoCloseLeftGroup(double distance, double angle, double speed) {
+public class AutoFarLeftGroup extends CommandGroup {
+
+    public AutoFarLeftGroup(double distance, double angle, double speed) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
     	addSequential(new AutoStraight(distance, speed));
-    	addSequential(new AutoTurn(angle, speed));
+    	addSequential(new AutoTurn(-angle, speed));
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCloseLeftGroup extends CommandGroup {
-	
-    public AutoCloseLeftGroup(double distance, double angle, double speed) {
+public class AutoFarRightGroup extends CommandGroup {
+
+    public AutoFarRightGroup(double distance, double angle, double speed) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

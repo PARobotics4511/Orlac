@@ -10,6 +10,7 @@ package org.usfirst.frc.team4511.robot;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,15 +18,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4511.robot.commands.AutoDrive;
-import org.usfirst.frc.team4511.robot.commands.AutoEncoder;
-import org.usfirst.frc.team4511.robot.commands.AutoFarLeft;
-import org.usfirst.frc.team4511.robot.commands.AutoFarRight;
+import org.usfirst.frc.team4511.robot.commands.AutoFarLeftGroup;
+import org.usfirst.frc.team4511.robot.commands.AutoFarRightGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoTurn;
 import org.usfirst.frc.team4511.robot.commands.EvenNow;
 import org.usfirst.frc.team4511.robot.commands.AutoStraight;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseLeftGroup;
-import org.usfirst.frc.team4511.robot.commands.AutoCloseRight;
-import org.usfirst.frc.team4511.robot.subsystems.DriveTest;
+import org.usfirst.frc.team4511.robot.commands.AutoCloseRightGroup;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4511.robot.subsystems.Hugger;
@@ -64,7 +63,7 @@ public class Robot extends IterativeRobot {
 	public static final PhotoEye rightEye = new PhotoEye(3);
 	public static final PhotoEye armEye = new PhotoEye(0);*/
 
-	
+	public Preferences prefs;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -76,15 +75,27 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		
+		prefs = Preferences.getInstance();
+		
+		double goCloseStraightDistance = prefs.getDouble("Autonomous Close Straight Distance", 3);
+		double goFarStraightDistance = prefs.getDouble("Autonomous Far Straight Distance", 3);
+		double rotateAngle = prefs.getDouble("Angle of rotation (- = left, + = right)", 90);
+		double speed = prefs.getDouble("Speed", 0.6);
+		
 		m_chooser.addDefault("My Auto", new AutoDrive());
-		m_chooser.addObject("Go Straight", new AutoStraight(3, 0.6));
-		m_chooser.addObject("Go Close Left Group", new AutoCloseLeftGroup());
-		m_chooser.addObject("Close Right Position", new AutoCloseRight());
-		m_chooser.addObject("Far Right Position", new AutoFarRight());
-		m_chooser.addObject("Far Left Position", new AutoFarLeft());
+		m_chooser.addObject("Go Straight", new AutoStraight(goCloseStraightDistance, speed));
+		
+		m_chooser.addObject("Go Close Left Group", new AutoCloseLeftGroup(goCloseStraightDistance, rotateAngle, speed));
+		m_chooser.addObject("Go Close Right Group", new AutoCloseRightGroup(goCloseStraightDistance, rotateAngle, speed));
+		m_chooser.addObject("Go Far Right Group", new AutoFarRightGroup(goFarStraightDistance, rotateAngle, speed));
+		m_chooser.addObject("Go Far Left Group", new AutoFarLeftGroup(goFarStraightDistance, rotateAngle, speed));
+		
+		
+		
+		
 		m_chooser.addObject("EVEN NOW, THE EVIL SEED OF WHAT YOU'VE DONE GERMINATES WITHIN YOU.", new EvenNow());
-		m_chooser.addObject("Encoder SPINz", new AutoEncoder());
-		m_chooser.addObject("Auto Turn", new AutoTurn(-90.0, 0.7));
+		m_chooser.addObject("Auto Turn", new AutoTurn(rotateAngle, speed));
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		/*String gameData;
