@@ -20,8 +20,10 @@ import org.usfirst.frc.team4511.robot.commands.AutoDrive;
 import org.usfirst.frc.team4511.robot.commands.AutoEncoder;
 import org.usfirst.frc.team4511.robot.commands.AutoFarLeft;
 import org.usfirst.frc.team4511.robot.commands.AutoFarRight;
+import org.usfirst.frc.team4511.robot.commands.AutoTurn;
 import org.usfirst.frc.team4511.robot.commands.EvenNow;
-import org.usfirst.frc.team4511.robot.commands.AutoCloseLeft;
+import org.usfirst.frc.team4511.robot.commands.AutoStraight;
+import org.usfirst.frc.team4511.robot.commands.AutoCloseLeftGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseRight;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTest;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
@@ -71,12 +73,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		m_chooser.addDefault("My Auto", new AutoDrive());
-		m_chooser.addObject("Close Left Position", new AutoCloseLeft());
+		m_chooser.addObject("Go Straight", new AutoStraight(3, 0.6));
+		m_chooser.addObject("Go Close Left Group", new AutoCloseLeftGroup());
 		m_chooser.addObject("Close Right Position", new AutoCloseRight());
 		m_chooser.addObject("Far Right Position", new AutoFarRight());
 		m_chooser.addObject("Far Left Position", new AutoFarLeft());
 		m_chooser.addObject("EVEN NOW, THE EVIL SEED OF WHAT YOU'VE DONE GERMINATES WITHIN YOU.", new EvenNow());
 		m_chooser.addObject("Encoder SPINz", new AutoEncoder());
+		m_chooser.addObject("Auto Turn", new AutoTurn(-90.0, 0.7));
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		/*String gameData;
@@ -155,6 +159,13 @@ public class Robot extends IterativeRobot {
 		soulTrain.checkLeftEncoder();
 		
 		Scheduler.getInstance().run();
+		
+		compass = soulTrain.gyro.getAngle();
+		if(compass > 360.0 || compass < -360.0) {
+			soulTrain.gyro.reset();
+		}
+		
+		SmartDashboard.putNumber("Gyro value", soulTrain.gyro.getAngle());
 	}
 
 	@Override

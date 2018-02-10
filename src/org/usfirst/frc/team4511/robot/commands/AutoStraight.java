@@ -10,12 +10,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoCloseLeft extends Command {
-
-    public AutoCloseLeft() {
+public class AutoStraight extends Command {
+	
+	public double goDistance;
+	public double goSpeed;
+	
+    public AutoStraight(double distance, double speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.soulTrain);
+    	goDistance = distance; //feet
+    	goSpeed = speed; //ranges -1 to 1
     }
 
     // Called just before this Command runs the first time
@@ -27,13 +32,15 @@ public class AutoCloseLeft extends Command {
     protected void execute() {
     	
 
-    	
-    	DriveTrain.drive(0.9, 0.9);
+    	while(true) {
+    	DriveTrain.drive(goSpeed, goSpeed);
     	//DriveTrain.checkLeftEncoder();
-    	if(DriveTrain.checkLeftEncoder() > 3 || DriveTrain.checkLeftEncoder() < -3 ) {
+    	if(DriveTrain.checkLeftEncoder() > goDistance || DriveTrain.checkLeftEncoder() < -goDistance ) {
     		DriveTrain.drive(0, 0);
+    		isFinished();
+    		break;
     	}
-    	
+    	}
     	
     	
     	/*try{ 
@@ -45,7 +52,7 @@ public class AutoCloseLeft extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
