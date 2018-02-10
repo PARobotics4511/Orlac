@@ -28,9 +28,11 @@ import org.usfirst.frc.team4511.robot.commands.AutoCloseRight;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTest;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team4511.robot.subsystems.Hugger;
 import org.usfirst.frc.team4511.robot.subsystems.Lifter;
 import org.usfirst.frc.team4511.robot.subsystems.PhotoEye;
 import org.usfirst.frc.team4511.robot.subsystems.Sonar;
+import org.usfirst.frc.team4511.robot.subsystems.Succ;
 
 import java.lang.Object;
 import edu.wpi.first.wpilibj.SendableBase;
@@ -55,6 +57,8 @@ public class Robot extends IterativeRobot {
 	/*public static final Lifter lifty = new Lifter();
 	public static final DriveTest drive = new DriveTest();
 	*/
+	public static final Succ succCube = new Succ();
+	public static final Hugger hugger = new Hugger();
 	public double compass;
 	/*public static final PhotoEye leftEye = new PhotoEye(2);
 	public static final PhotoEye rightEye = new PhotoEye(3);

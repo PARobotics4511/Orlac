@@ -18,7 +18,7 @@ public class DriveTest extends Subsystem {
     
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public static WPI_TalonSRX driverMotor = new WPI_TalonSRX(RobotMap.driverMotor);
+//	public static WPI_TalonSRX driverMotor = new WPI_TalonSRX(RobotMap.driverMotor);
 	
 	public static Encoder driveTestEncoder = new Encoder(0,1);
 	

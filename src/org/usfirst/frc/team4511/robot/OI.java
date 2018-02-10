@@ -7,6 +7,13 @@
 
 package org.usfirst.frc.team4511.robot;
 
+import org.usfirst.frc.team4511.robot.commands.Hug;
+import org.usfirst.frc.team4511.robot.commands.HugRelease;
+import org.usfirst.frc.team4511.robot.commands.HugStop;
+import org.usfirst.frc.team4511.robot.commands.SuccIn;
+import org.usfirst.frc.team4511.robot.commands.SuccOut;
+import org.usfirst.frc.team4511.robot.commands.SuccStop;
+
 //import org.usfirst.frc.team4511.robot.commands.DriveTestDown;
 //import org.usfirst.frc.team4511.robot.commands.DriveTestStop;
 //import org.usfirst.frc.team4511.robot.commands.DriveTestUp;
@@ -48,6 +55,12 @@ public class OI {
 		JoystickButton butt3 = new JoystickButton(stick1, 3);
 		JoystickButton butt4 = new JoystickButton(stick2, 3);
 		
+		JoystickButton butt5 = new JoystickButton(stick1, 4);
+		JoystickButton butt6 = new JoystickButton(stick2, 4);
+		
+		JoystickButton butt7 = new JoystickButton(stick1, 2);
+		JoystickButton butt8 = new JoystickButton(stick2, 2);
+		
 		/*butt1.whenPressed(new LiftUp());
 		butt2.whenPressed(new LiftDown());
 		
@@ -59,6 +72,18 @@ public class OI {
 		
 		butt3.whenReleased(new DriveTestStop());
 		butt4.whenReleased(new DriveTestStop());*/
+		
+		butt5.whenPressed(new SuccIn());
+		butt6.whenPressed(new SuccOut());
+		
+		butt5.whenReleased(new SuccStop());
+		butt6.whenReleased(new SuccStop());
+		
+		butt7.whenPressed(new Hug());
+		butt8.whenPressed(new HugRelease());
+		
+		butt7.whenReleased(new HugStop());
+		butt8.whenReleased(new HugStop());
 
 	}
 
