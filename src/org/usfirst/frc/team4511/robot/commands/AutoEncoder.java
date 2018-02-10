@@ -39,7 +39,7 @@ public class AutoEncoder extends Command {
     	
     	while(Math.abs(DriveTest.checkDriveTestEncoder()) < 60 /* || DriveTest.checkDriveTestEncoder() > -60 */) {
     		//SmartDashboard.putNumber("Oh god what is happening", DriveTest.checkDriveTestEncoder());
-    		DriveTest.driverMotor.set(-0.9);
+    	//	DriveTest.driverMotor.set(-0.9);
     	}
     	try{
 			Thread.sleep(10);
@@ -57,7 +57,7 @@ public class AutoEncoder extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	DriveTest.driverMotor.set(0.0);;
+    //	DriveTest.driverMotor.set(0.0);;
     }
 
     // Called when another command which requires one or more of the same
