@@ -32,6 +32,7 @@ import org.usfirst.frc.team4511.robot.subsystems.Lifter;
 import org.usfirst.frc.team4511.robot.subsystems.PhotoEye;
 import org.usfirst.frc.team4511.robot.subsystems.Sonar;
 import org.usfirst.frc.team4511.robot.subsystems.Succ;
+import org.usfirst.frc.team4511.robot.subsystems.Winch;
 
 import java.lang.Object;
 import edu.wpi.first.wpilibj.SendableBase;
@@ -53,11 +54,13 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final DriveTrain soulTrain = new DriveTrain();
 	public static final Sonar pulseFront = new Sonar(3, 2);
-	/*public static final Lifter lifty = new Lifter();
-	public static final DriveTest drive = new DriveTest();
+	public static final Lifter lifty = new Lifter();
+	/*public static final DriveTest drive = new DriveTest();
 	*/
-	public static final Succ succCube = new Succ();
+	public static final Succ succer = new Succ();
 	public static final Hugger hugger = new Hugger();
+	
+	public static final Winch climber = new Winch();
 	public double compass;
 	/*public static final PhotoEye leftEye = new PhotoEye(2);
 	public static final PhotoEye rightEye = new PhotoEye(3);
@@ -83,30 +86,30 @@ public class Robot extends IterativeRobot {
 		double rotateAngle = prefs.getDouble("Angle of rotation (- = left, + = right)", 90);
 		double speed = prefs.getDouble("Speed", 0.6);
 		
-		m_chooser.addDefault("My Auto", new AutoDrive());
+		/*m_chooser.addDefault("My Auto", new AutoDrive());
 		m_chooser.addObject("Go Straight", new AutoStraight(goCloseStraightDistance, speed));
 		
-		m_chooser.addObject("Go Close Left Group", new AutoCloseLeftGroup(goCloseStraightDistance, rotateAngle, speed));
-		m_chooser.addObject("Go Close Right Group", new AutoCloseRightGroup(goCloseStraightDistance, rotateAngle, speed));
-		m_chooser.addObject("Go Far Right Group", new AutoFarRightGroup(goFarStraightDistance, rotateAngle, speed));
-		m_chooser.addObject("Go Far Left Group", new AutoFarLeftGroup(goFarStraightDistance, rotateAngle, speed));
+		m_chooser.addObject("Go Close Left Group", new AutoCloseLeftGroup(2, -90.0, 0.8));
+		m_chooser.addObject("Go Close Right Group", new AutoCloseRightGroup(2, 90.0, 0.8));
+		m_chooser.addObject("Go Far Right Group", new AutoFarRightGroup(4, 90.0, 0.8));
+		m_chooser.addObject("Go Far Left Group", new AutoFarLeftGroup(4, -90.0, 0.8));
 		
 		
 		
 		
 		m_chooser.addObject("EVEN NOW, THE EVIL SEED OF WHAT YOU'VE DONE GERMINATES WITHIN YOU.", new EvenNow());
-		m_chooser.addObject("Auto Turn", new AutoTurn(rotateAngle, speed));
+		m_chooser.addObject("Auto Turn", new AutoTurn(rotateAngle, speed));*/
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
-		/*String gameData;
+		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
-			m_chooser.addDefault("Go Left", new AutoCloseLeft());
+			m_chooser.addDefault("Go Left", new AutoCloseLeftGroup(3, 90, 0.7));
 			SmartDashboard.putData("Auto mode", m_chooser);
 		} else {
-			m_chooser.addDefault("Go Right", new AutoCloseRight());
+			m_chooser.addDefault("Go Right", new AutoCloseRightGroup(3, -90, 0.7));
 			SmartDashboard.putData("Auto mode", m_chooser);
-		}*/
+		}
 		
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
@@ -135,6 +138,9 @@ public class Robot extends IterativeRobot {
 		soulTrain.gyro.reset();
 		//drive.driveTestEncoder.reset();
 		soulTrain.leftDriveEncoder.reset();
+		
+		Hugger.huggerLeft.getSensorCollection().setQuadraturePosition(0, 10);
+		Hugger.huggerRight.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 
 	/**

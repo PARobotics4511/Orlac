@@ -13,7 +13,7 @@ public class AutoFarLeftGroup extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	addSequential(new AutoStraight(distance, speed));
-    	addSequential(new AutoTurn(-angle, speed));
+    	addSequential(new AutoTurn(angle, speed));
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

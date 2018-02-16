@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4511.robot.commands;
+ package org.usfirst.frc.team4511.robot.commands;
 
 import org.usfirst.frc.team4511.robot.Robot;
 import org.usfirst.frc.team4511.robot.subsystems.Succ;
@@ -13,7 +13,7 @@ public class SuccIn extends Command {
     public SuccIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.succCube);
+    	requires(Robot.succer);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +22,7 @@ public class SuccIn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Succ.succCubeUno.set(-0.5);
-    	Succ.succCubeDos.set(-0.5);
+    	Robot.succer.succIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()

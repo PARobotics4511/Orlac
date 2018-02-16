@@ -79,6 +79,10 @@ public class Lifter extends Subsystem {
 		lifterMotor.set(-0.5);
 	}
 	
+	/*public void winchUp() {
+		
+	}*/
+	
 	public void checkEncoder() {
 		
 		SmartDashboard.putNumber("Top Limit switch count", (double)counterTop.get());

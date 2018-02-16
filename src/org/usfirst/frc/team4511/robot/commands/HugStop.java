@@ -22,8 +22,8 @@ public class HugStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Hugger.huggerUno.set(0);
-    	Hugger.huggerDos.set(0);
+    	Hugger.huggerLeft.set(0);
+    	Hugger.huggerRight.set(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

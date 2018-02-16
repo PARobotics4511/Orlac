@@ -24,7 +24,7 @@ public class AutoDrive extends Command {
     protected void execute() {
     	DriveTrain.drive(0.7, 0.7);
         try{ 
-        	Thread.sleep(1900);
+        	Thread.sleep(1900); 
         }catch(InterruptedException e){
         	Thread.currentThread().interrupt();	
         }

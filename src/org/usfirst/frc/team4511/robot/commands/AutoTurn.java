@@ -4,6 +4,7 @@ import org.usfirst.frc.team4511.robot.Robot;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,18 +33,25 @@ public class AutoTurn extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	    if(turnAngle <= 0) { //turn left
+	    if(turnAngle <= 0) { //turn right
+	    	Robot.soulTrain.gyro.reset();
 	    	while(true) {
+	    		
 		    	DriveTrain.drive(goSpeed, -goSpeed);
-		    	if(Math.abs(Robot.soulTrain.gyro.getAngle()) > turnAngle) {
+		    	SmartDashboard.putString("Time to move to the right?", "Yes it is");
+		    	if(-Robot.soulTrain.gyro.getAngle() < turnAngle) {
+		    		SmartDashboard.putString("Time to move to the right?", "it's time for us to stop");
 		    		DriveTrain.drive(0, 0);
 		    		isFinished();
 		    		break;
 		    	}
 	    	}
 	    } else {
-	    	while(true) {
+	    	Robot.soulTrain.gyro.reset();
+	    	while(true) { //turn left
+	    		
 		    	DriveTrain.drive(-goSpeed, goSpeed);
+		    	SmartDashboard.putString("Time to move to the right?", "Nope!");
 		    	if(Math.abs(Robot.soulTrain.gyro.getAngle()) > turnAngle) {
 		    		DriveTrain.drive(0, 0);
 		    		isFinished();

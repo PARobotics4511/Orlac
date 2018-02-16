@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SuccStop extends Command {
+public class AutoSuccIn extends Command {
 
-    public SuccStop() {
+    public AutoSuccIn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.succer);
@@ -22,17 +22,22 @@ public class SuccStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Succ.succCubeUno.set(0);
-    	Succ.succCubeDos.set(0);
+    	Robot.succer.succIn();
+        try{ 
+        	Thread.sleep(1000);
+        }catch(InterruptedException e){
+        	Thread.currentThread().interrupt();	
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.succer.succStop();
     }
 
     // Called when another command which requires one or more of the same

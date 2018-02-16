@@ -13,7 +13,7 @@ public class SuccOut extends Command {
     public SuccOut() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.succCube);
+    	requires(Robot.succer);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +22,7 @@ public class SuccOut extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Succ.succCubeUno.set(0.5);
-    	Succ.succCubeDos.set(0.5);
+    	Robot.succer.succOut();
     }
 
     // Make this return true when this Command no longer needs to run execute()
