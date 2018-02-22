@@ -21,7 +21,7 @@ public class AutoLiftUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.lifty.liftUp();
+        Robot.lifty.liftUp(1);
     	try{ 
         	Thread.sleep(1900); 
         }catch(InterruptedException e){

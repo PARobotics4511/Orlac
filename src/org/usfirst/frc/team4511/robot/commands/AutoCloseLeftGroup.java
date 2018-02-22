@@ -12,10 +12,11 @@ public class AutoCloseLeftGroup extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addSequential(new AutoStraight(distance, speed));
+    	addParallel(new AutoLiftUp());
+    	addParallel(new AutoStraight(distance, speed));
     	addSequential(new AutoTurn(angle, speed));
     	//New edits start here
-    	addSequential(new AutoLiftUp());
+    	
     	addSequential(new AutoHugRelease());
     	addSequential(new AutoStraight(-1, 0.6));
     	addSequential(new AutoLiftDown());

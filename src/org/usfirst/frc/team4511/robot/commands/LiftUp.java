@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4511.robot.commands;
 
+import org.usfirst.frc.team4511.robot.OI;
 import org.usfirst.frc.team4511.robot.Robot;
 import org.usfirst.frc.team4511.robot.subsystems.Lifter;
 
@@ -28,7 +29,7 @@ public class LiftUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifty.liftUp();
+    	Robot.lifty.liftUp(1);
     	
     	//Robot.lifty.checkEncoder();
     	//Encoder lifterEncoder = new Encoder(3, 4, true, EncodingType.k4X);
@@ -36,7 +37,7 @@ public class LiftUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+    	return false;
         //return Robot.lifty.isTopSwitchSet();
     }
 

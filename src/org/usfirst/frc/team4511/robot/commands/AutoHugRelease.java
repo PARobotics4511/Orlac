@@ -22,13 +22,14 @@ public class AutoHugRelease extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Hugger.huggerLeft.set(0.5);
+    	Robot.hugger.autoRelease();
+    	/*Hugger.huggerLeft.set(0.5);
     	Hugger.huggerRight.set(0.5);
         try{ 
         	Thread.sleep(1000);
         }catch(InterruptedException e){
         	Thread.currentThread().interrupt();	
-        }
+        }*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

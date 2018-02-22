@@ -33,13 +33,23 @@ public class DriveTrain extends Subsystem {
 	
 	
 	//Encoder stuff
-	public static Encoder leftDriveEncoder = new Encoder(0,1);
+	public static Encoder leftDriveEncoder = new Encoder(4,5);
 	
-	public static int count;
-	public double distance;
+	public static Encoder rightDriveEncoder = new Encoder(2,3);
+	
+	public static int lCount;
+	
+	public static int rCount;
+	
+	public double lDistance;
+	
+	public static double rDistance;
+	
 	public static double driveRevolutions;
 	public static double distanceTraveled;
 	
+	public static double leftTraveled;
+	public static double rightTraveled;
 	
 	public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(RobotMap.topLeftMotor);
 	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(RobotMap.topRightMotor);
@@ -49,13 +59,13 @@ public class DriveTrain extends Subsystem {
 	public static double checkLeftEncoder() {
 		//6 inch wheels
 		
-		count = leftDriveEncoder.get();
-		SmartDashboard.putNumber("Toughbox Encoder", count); //360 cycles per revolution, 1440 pulses per revolution
+		lCount = leftDriveEncoder.get();
+		SmartDashboard.putNumber("Left Encoder", lCount); //360 cycles per revolution, 1440 pulses per revolution
 		
-		driveRevolutions = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
-		SmartDashboard.putNumber("Toughbox distance (ft)", driveRevolutions);
+		leftTraveled = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+		SmartDashboard.putNumber("Left Motor distance (ft)", leftTraveled);
 		
-		return driveRevolutions;
+		return leftTraveled;
 		//SmartDashboard.putNumber("Lifter RPM", lifterMotor.getSelectedSensorVelocity(0)*(600/4096));
 		//double linearVelocity = 6 * 60 * 3.141 * (2/3);
 		//SmartDashboard.putDouble("Lifter Velocity (ft/s)", linearVelocity);
@@ -72,6 +82,23 @@ public class DriveTrain extends Subsystem {
 		return distanceTraveled;
 	}
 	
+	public static double checkRightEncoder() {
+		rCount = rightDriveEncoder.get();
+		SmartDashboard.putNumber("Right Encoder", rCount);
+		
+		rightTraveled = rightDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+		SmartDashboard.putNumber("Right Motor distance (ft)", rightTraveled);
+		
+		return rightTraveled;
+	}
+	
+	public static double giveTurnDistance(double angle) {
+		double radius = 29.0; //distance between middle wheels (inches)
+		
+		double distanceToTravel = (2 * 3.14159 * radius)/(360 / angle);
+		
+		return distanceToTravel;
+	}
 	
 	@SuppressWarnings("deprecation")
 	public DriveTrain() {

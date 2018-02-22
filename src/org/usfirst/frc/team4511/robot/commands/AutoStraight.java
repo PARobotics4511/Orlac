@@ -30,19 +30,30 @@ public class AutoStraight extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(goDistance >= 0) {
+	    	while(true) {
+		    	DriveTrain.drive(goSpeed, goSpeed);
+		    	//DriveTrain.checkLeftEncoder();
+		    	double avg = (DriveTrain.checkLeftEncoder() + DriveTrain.checkRightEncoder())/2;
+		    	if(avg > goDistance || avg < -goDistance ) {
+		    		DriveTrain.drive(0, 0);
+		    		isFinished();
+		    		break;
+		    	}
+	    	}
     	
-
-    	while(true) {
-    	DriveTrain.drive(goSpeed, goSpeed);
-    	//DriveTrain.checkLeftEncoder();
-    	if(DriveTrain.checkLeftEncoder() > goDistance || DriveTrain.checkLeftEncoder() < -goDistance ) {
-    		DriveTrain.drive(0, 0);
-    		isFinished();
-    		break;
+    	} else { //go backwards if value given is negative
+	    	while(true) {
+		    	DriveTrain.drive(-goSpeed, -goSpeed);
+		    	//DriveTrain.checkLeftEncoder();
+		    	double avg = (Math.abs(DriveTrain.checkLeftEncoder()) + Math.abs(DriveTrain.checkRightEncoder()))/2;
+		    	if(avg > goDistance || avg < -goDistance ) {
+		    		DriveTrain.drive(0, 0);
+		    		isFinished();
+		    		break;
+		    	}
+	    	}
     	}
-    	}
-    	
-    	
     	/*try{ 
         	Thread.sleep(7000);
         }catch(InterruptedException e){

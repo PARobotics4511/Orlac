@@ -21,12 +21,12 @@ public class Succ extends Subsystem {
 	public static WPI_TalonSRX succCubeDos = new WPI_TalonSRX(RobotMap.succCubeDos);
 	
 	public void succIn() {
-		succCubeUno.set(-0.5);
+		succCubeUno.set(0.5);
 		succCubeDos.set(-0.5);
 	}
 	
 	public void succOut() {
-		succCubeUno.set(0.5);
+		succCubeUno.set(-0.5);
 		succCubeDos.set(0.5);
 	}
 	

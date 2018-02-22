@@ -22,12 +22,13 @@ public class AutoHug extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.hugger.hug();
+    	Robot.hugger.autoHug();
+    	/*Robot.hugger.hug();
         try{ 
         	Thread.sleep(1000);
         }catch(InterruptedException e){
         	Thread.currentThread().interrupt();	
-        }
+        }*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

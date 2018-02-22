@@ -71,12 +71,12 @@ public class Lifter extends Subsystem {
 		lifterMotor.set(0.0);
 	}
 	
-	public void liftUp() {
-		lifterMotor.set(0.5);
+	public void liftUp(double input) {
+		lifterMotor.set(-input);
 	}
 	
 	public void liftDown() {
-		lifterMotor.set(-0.5);
+		lifterMotor.set(1);
 	}
 	
 	/*public void winchUp() {

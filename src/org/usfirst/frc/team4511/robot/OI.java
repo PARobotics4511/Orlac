@@ -17,6 +17,7 @@ import org.usfirst.frc.team4511.robot.commands.SuccIn;
 import org.usfirst.frc.team4511.robot.commands.SuccOut;
 import org.usfirst.frc.team4511.robot.commands.SuccStop;
 import org.usfirst.frc.team4511.robot.commands.WinchDown;
+import org.usfirst.frc.team4511.robot.commands.WinchStop;
 import org.usfirst.frc.team4511.robot.commands.WinchUp;
 
 //import org.usfirst.frc.team4511.robot.commands.DriveTestDown;
@@ -44,7 +45,7 @@ public class OI {
 	static Joystick stick1 = new Joystick(0);
 	static Joystick stick2 = new Joystick(1);
 
-	
+	static Joystick gamepad = new Joystick(3);
 	
 
 	// There are a few additional built in buttons you can use. Additionally,
@@ -54,6 +55,7 @@ public class OI {
 	static double deadzone = .1;
 	
 	public OI() {
+		
 		JoystickButton butt1 = new JoystickButton(stick1, 1);
 		JoystickButton butt2 = new JoystickButton(stick2, 1);
 		
@@ -66,17 +68,50 @@ public class OI {
 		JoystickButton butt7 = new JoystickButton(stick1, 2);
 		JoystickButton butt8 = new JoystickButton(stick2, 2);
 		
-		butt1.whenPressed(new LiftUp());
-		butt2.whenPressed(new LiftDown());
 		
-		butt3.whenPressed(new WinchUp());
-		butt4.whenPressed(new WinchDown());
+		JoystickButton game1 = new JoystickButton(gamepad, 6); //left bumper
+		JoystickButton game2 = new JoystickButton(gamepad, 7);  //right bumper
 		
-		butt1.whenReleased(new LiftStop());
-		butt2.whenReleased(new LiftStop());
+		JoystickButton gameX = new JoystickButton(gamepad, 3);
+		JoystickButton gameB = new JoystickButton(gamepad, 4);
 		
-		butt3.whenReleased(new WinchUp());
-		butt4.whenReleased(new WinchDown());
+		//JoystickButton leftTrigger = new JoyStickTrigger()
+		
+		if(gamepad.getZ() > 0.75) { //left trigger
+			new LiftUp();
+		}
+		
+		if(gamepad.getZ() < 0.25) { //right trigger
+			new LiftDown();
+		}
+		
+		if(gamepad.getZ() == 0.50) {
+			new LiftStop();
+		}
+		game1.whenPressed(new WinchUp());
+		game2.whenPressed(new WinchDown());
+		
+		game1.whenReleased(new WinchStop());
+		game2.whenReleased(new WinchStop());
+		
+		gameX.whenPressed(new HugRelease());
+		gameB.whenPressed(new Hug());
+		
+		gameX.whenReleased(new HugStop());
+		gameB.whenReleased(new HugStop());
+		
+		
+		butt1.whenPressed(new WinchUp());
+		butt2.whenPressed(new WinchDown());
+		
+		butt3.whenPressed(new LiftUp());
+		butt4.whenPressed(new LiftDown());
+		
+		butt1.whenReleased(new WinchStop());
+		butt2.whenReleased(new WinchStop());
+		
+		butt3.whenReleased(new LiftStop());
+		butt4.whenReleased(new LiftStop());
 		
 		butt5.whenPressed(new SuccIn());
 		butt6.whenPressed(new SuccOut());
@@ -112,7 +147,14 @@ public class OI {
 		}
 		return 0;
 	}
-
+	
+	public static double getYInput3() {
+		if (Math.abs(gamepad.getY()) > deadzone) {
+			return -gamepad.getY();
+		}
+		return 0;
+	}
+	
 	// Run the command while the button is being held down and interrupt it once
 	// the button is released.
 	// button.whileHeld(new ExampleCommand());

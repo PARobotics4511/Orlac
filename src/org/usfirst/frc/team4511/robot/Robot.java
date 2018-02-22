@@ -30,7 +30,7 @@ import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4511.robot.subsystems.Hugger;
 import org.usfirst.frc.team4511.robot.subsystems.Lifter;
 import org.usfirst.frc.team4511.robot.subsystems.PhotoEye;
-import org.usfirst.frc.team4511.robot.subsystems.Sonar;
+//import org.usfirst.frc.team4511.robot.subsystems.;
 import org.usfirst.frc.team4511.robot.subsystems.Succ;
 import org.usfirst.frc.team4511.robot.subsystems.Winch;
 
@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static final DriveTrain soulTrain = new DriveTrain();
-	public static final Sonar pulseFront = new Sonar(3, 2);
+	//public static final  pulseFront = new (3, 2);
 	public static final Lifter lifty = new Lifter();
 	/*public static final DriveTest drive = new DriveTest();
 	*/
@@ -138,6 +138,7 @@ public class Robot extends IterativeRobot {
 		soulTrain.gyro.reset();
 		//drive.driveTestEncoder.reset();
 		soulTrain.leftDriveEncoder.reset();
+		soulTrain.rightDriveEncoder.reset();
 		
 		Hugger.huggerLeft.getSensorCollection().setQuadraturePosition(0, 10);
 		Hugger.huggerRight.getSensorCollection().setQuadraturePosition(0, 10);
@@ -210,6 +211,9 @@ public class Robot extends IterativeRobot {
 		//drive.checkDriveTestEncoder();
 		soulTrain.checkLeftEncoder();
 		
+		hugger.checkLeftEncoder(); //outputs relevant data to SmartDashboard
+		
+		hugger.checkRightEncoder();
 		compass = soulTrain.gyro.getAngle();
 		if(compass > 360.0 || compass < -360.0) {
 			soulTrain.gyro.reset();
