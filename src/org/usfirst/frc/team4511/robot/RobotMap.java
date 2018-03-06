@@ -25,8 +25,8 @@ public class RobotMap {
 	
 	public static final int lifterMotor = 5;
 	//public static final int driverMotor = 6;
-	public static final int succCubeUno = 6;
-	public static final int succCubeDos = 7;
+	public static final int succCubeUno = 6; //left
+	public static final int succCubeDos = 7; //right
 	
 	public static final int huggerUno = 8;
 	public static final int huggerDos = 9;

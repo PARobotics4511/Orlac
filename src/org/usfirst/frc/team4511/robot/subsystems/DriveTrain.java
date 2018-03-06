@@ -33,11 +33,17 @@ public class DriveTrain extends Subsystem {
 	
 	
 	//Encoder stuff
-	public static Encoder leftDriveEncoder = new Encoder(0,1);
+	public static Encoder leftDriveEncoder = new Encoder(3,4);
+	public static Encoder rightDriveEncoder = new Encoder(0,1);
 	
-	public static int count;
+	public static int lCount;
+	public static int rCount;
+	
 	public double distance;
-	public static double driveRevolutions;
+	
+	public static double lDriveDistance;
+	public static double rDriveDistance;
+	
 	public static double distanceTraveled;
 	
 	
@@ -46,16 +52,38 @@ public class DriveTrain extends Subsystem {
 	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(RobotMap.bottomLeftMotor);
 	public static WPI_TalonSRX backRight = new WPI_TalonSRX(RobotMap.bottomRightMotor);
 	
+	public static double checkRightEncoder() {
+		rCount = rightDriveEncoder.get();
+		rDriveDistance = rightDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+		
+		SmartDashboard.putNumber("Right Distance (ft)", rDriveDistance);
+		
+		return rDriveDistance;
+	}
 	public static double checkLeftEncoder() {
 		//6 inch wheels
+		rCount = rightDriveEncoder.get();
+		rDriveDistance = rightDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
 		
-		count = leftDriveEncoder.get();
-		SmartDashboard.putNumber("Toughbox Encoder", count); //360 cycles per revolution, 1440 pulses per revolution
+		SmartDashboard.putNumber("Right Distance (ft)", rDriveDistance);
 		
-		driveRevolutions = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
-		SmartDashboard.putNumber("Toughbox distance (ft)", driveRevolutions);
+	
 		
-		return driveRevolutions;
+		lCount = leftDriveEncoder.get();
+		//SmartDashboard.putNumber("Left Motor", lCount); //360 cycles per revolution, 1440 pulses per revolution
+		
+		SmartDashboard.putNumber("Right Motor", rCount);
+		
+		
+		lDriveDistance = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+		
+		SmartDashboard.putNumber("Left distance (ft)", lDriveDistance);
+		
+		double averageDistance = lDriveDistance + rDriveDistance / 2;
+		
+		SmartDashboard.putNumber("Average Distance", averageDistance);
+		
+		return averageDistance;
 		//SmartDashboard.putNumber("Lifter RPM", lifterMotor.getSelectedSensorVelocity(0)*(600/4096));
 		//double linearVelocity = 6 * 60 * 3.141 * (2/3);
 		//SmartDashboard.putDouble("Lifter Velocity (ft/s)", linearVelocity);

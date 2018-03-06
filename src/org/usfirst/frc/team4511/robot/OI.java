@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team4511.robot;
 
+import org.usfirst.frc.team4511.robot.commands.AutoHug;
 import org.usfirst.frc.team4511.robot.commands.Hug;
 import org.usfirst.frc.team4511.robot.commands.HugRelease;
 import org.usfirst.frc.team4511.robot.commands.HugStop;
@@ -17,6 +18,7 @@ import org.usfirst.frc.team4511.robot.commands.SuccIn;
 import org.usfirst.frc.team4511.robot.commands.SuccOut;
 import org.usfirst.frc.team4511.robot.commands.SuccStop;
 import org.usfirst.frc.team4511.robot.commands.WinchDown;
+import org.usfirst.frc.team4511.robot.commands.WinchStop;
 import org.usfirst.frc.team4511.robot.commands.WinchUp;
 
 //import org.usfirst.frc.team4511.robot.commands.DriveTestDown;
@@ -28,6 +30,7 @@ import org.usfirst.frc.team4511.robot.commands.WinchUp;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -43,7 +46,7 @@ public class OI {
 	// Button button = new JoystickButton(stick, buttonNumber);
 	static Joystick stick1 = new Joystick(0);
 	static Joystick stick2 = new Joystick(1);
-
+	static Joystick gamepad = new Joystick(2);
 	
 	
 
@@ -54,41 +57,70 @@ public class OI {
 	static double deadzone = .1;
 	
 	public OI() {
-		JoystickButton butt1 = new JoystickButton(stick1, 1);
-		JoystickButton butt2 = new JoystickButton(stick2, 1);
+		JoystickButton leftTrigger = new JoystickButton(stick1, 1);
+		JoystickButton rightTrigger = new JoystickButton(stick2, 1);
 		
-		JoystickButton butt3 = new JoystickButton(stick1, 3);
-		JoystickButton butt4 = new JoystickButton(stick2, 3);
+		JoystickButton leftThree = new JoystickButton(stick1, 3);
+		JoystickButton rightThree = new JoystickButton(stick2, 3);
 		
-		JoystickButton butt5 = new JoystickButton(stick1, 4);
+		JoystickButton butt5 = new JoystickButton(stick1, 5);
 		JoystickButton butt6 = new JoystickButton(stick2, 4);
 		
 		JoystickButton butt7 = new JoystickButton(stick1, 2);
 		JoystickButton butt8 = new JoystickButton(stick2, 2);
 		
-		butt1.whenPressed(new LiftUp());
-		butt2.whenPressed(new LiftDown());
+		JoystickButton y = new JoystickButton(gamepad, 4);
+		JoystickButton a = new JoystickButton(gamepad, 1);
 		
-		butt3.whenPressed(new WinchUp());
-		butt4.whenPressed(new WinchDown());
+		JoystickButton leftBumper = new JoystickButton(gamepad, 5);
+		JoystickButton rightBumper = new JoystickButton(gamepad, 6);
+
+		JoystickButton gameLeftTrigger = new JoystickButton(gamepad, 7);
+		JoystickButton gameRightTrigger = new JoystickButton(gamepad, 8);
 		
-		butt1.whenReleased(new LiftStop());
-		butt2.whenReleased(new LiftStop());
 		
-		butt3.whenReleased(new WinchUp());
-		butt4.whenReleased(new WinchDown());
+		gameLeftTrigger.whenPressed(new WinchUp());
+		gameRightTrigger.whenPressed(new WinchDown());
 		
-		butt5.whenPressed(new SuccIn());
-		butt6.whenPressed(new SuccOut());
+		gameLeftTrigger.whenReleased(new WinchStop());
+		gameRightTrigger.whenReleased(new WinchStop());
 		
-		butt5.whenReleased(new SuccStop());
-		butt6.whenReleased(new SuccStop());
+		leftTrigger.whenPressed(new HugRelease());
+		rightTrigger.whenPressed(new AutoHug());
 		
-		butt7.whenPressed(new Hug());
-		butt8.whenPressed(new HugRelease());
+		leftThree.whenPressed(new SuccOut());
+		rightThree.whenPressed(new SuccIn());
 		
-		butt7.whenReleased(new HugStop());
-		butt8.whenReleased(new HugStop());
+		leftTrigger.whenReleased(new HugStop());
+		//rightTrigger.whenReleased(new LiftStop());
+		
+		leftThree.whenReleased(new SuccStop());
+		rightThree.whenReleased(new SuccStop());
+		
+		
+		leftBumper.whenPressed(new LiftDown());
+		rightBumper.whenPressed(new LiftUp());
+		
+		leftBumper.whenReleased(new LiftStop());
+		rightBumper.whenReleased(new LiftStop());
+		
+		//butt5.whenPressed(new SuccIn());
+		//butt6.whenPressed(new SuccOut());
+		
+		//butt5.whenReleased(new SuccStop()); //left stick
+		//butt6.whenReleased(new SuccStop()); //right stick
+		
+		//butt7.whenPressed(new Hug());
+		//butt8.whenPressed(new HugRelease());
+		
+		y.whenPressed(new Hug());
+		a.whenPressed(new HugRelease());
+		
+		y.whenReleased(new HugStop());
+		a.whenReleased(new HugStop());
+		
+		//butt7.whenReleased(new HugStop());
+		//butt8.whenReleased(new HugStop());
 
 	}
 

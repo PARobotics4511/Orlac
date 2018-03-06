@@ -19,13 +19,13 @@ public class Hugger extends Subsystem {
 	public static WPI_TalonSRX huggerRight = new WPI_TalonSRX(RobotMap.huggerDos);
 	
 	public void hug() {
-		huggerLeft.set(-0.5);
-		huggerRight.set(-0.5);
+		huggerLeft.set(-0.65);
+		huggerRight.set(0.65);
 	}
 	
 	public void release() {
 		huggerLeft.set(0.5);
-		huggerRight.set(0.5);
+		huggerRight.set(-0.5);
 	}
 	
 	public void hugStop() {
@@ -38,14 +38,14 @@ public class Hugger extends Subsystem {
 		double startingPosition = 0; // degrees
 		double grabbingPoint = 120; // degrees
 		
-		double huggerUnoDegrees = huggerLeft.getSelectedSensorPosition(0) / 4096.0 * 360.0;
-		double huggerDosDegrees = huggerLeft.getSelectedSensorPosition(0) / 4096.0 * 360.0;
+		double huggerLeftDegrees = huggerLeft.getSelectedSensorPosition(0) / 4096.0 / 15.0 * 360.0;
+		double huggerRightDegrees = huggerRight.getSelectedSensorPosition(0) / 4096.0 / 15.0 * 360.0;
 		//swings out 14" bar
-		SmartDashboard.putNumber("HuggerUno rotations", huggerLeft.getSelectedSensorPosition(0) / 4096.0); //4096 units per rotation
-		SmartDashboard.putNumber("HuggerUno position (degrees)", huggerUnoDegrees);
-		
-		SmartDashboard.putNumber("HuggerDos rotations", huggerRight.getSelectedSensorPosition(0) / 4096.0); //4096 units per rotation
-		SmartDashboard.putNumber("HuggerDos position (degrees)", huggerDosDegrees);
+		SmartDashboard.putNumber("HuggerLeft rotations", huggerLeft.getSelectedSensorPosition(0) / 4096.0 / 15.0 ); //4096 units per rotation
+		SmartDashboard.putNumber("HuggerLeft position (degrees)", huggerLeftDegrees);
+		SmartDashboard.putString("Is checkEncoder() getting called?", "Yes!");
+		SmartDashboard.putNumber("HuggerRight rotations", huggerRight.getSelectedSensorPosition(0) / 4096.0 / 15.0); //4096 units per rotation
+		SmartDashboard.putNumber("HuggerRight position (degrees)", huggerRightDegrees);
 		
 		
 		/*double RPM = huggerUno.getSelectedSensorVelocity(0) * (600.0/4096.0);

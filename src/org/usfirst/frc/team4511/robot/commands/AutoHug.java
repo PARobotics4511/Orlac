@@ -23,16 +23,16 @@ public class AutoHug extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.hugger.hug();
-        try{ 
-        	Thread.sleep(1000);
+       /* try{ 
+        	Thread.sleep(100000);
         }catch(InterruptedException e){
         	Thread.currentThread().interrupt();	
-        }
+        }*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -43,5 +43,6 @@ public class AutoHug extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.hugger.hugStop();
     }
 }

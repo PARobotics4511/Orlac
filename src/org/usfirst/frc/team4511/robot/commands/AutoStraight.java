@@ -28,6 +28,10 @@ public class AutoStraight extends Command {
     	SmartDashboard.putString("Status:", "i SHALL move to the closest switch on the LEfT THANKS!!");
     }
 
+    protected double averageDistance() {
+    	double averageDist = DriveTrain.checkLeftDistance();
+    	return averageDist;
+    }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	

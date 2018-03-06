@@ -20,8 +20,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4511.robot.commands.AutoDrive;
 import org.usfirst.frc.team4511.robot.commands.AutoFarLeftGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoFarRightGroup;
+import org.usfirst.frc.team4511.robot.commands.AutoHug;
+import org.usfirst.frc.team4511.robot.commands.AutoHugRelease;
 import org.usfirst.frc.team4511.robot.commands.AutoTurn;
 import org.usfirst.frc.team4511.robot.commands.EvenNow;
+import org.usfirst.frc.team4511.robot.commands.Hug;
+import org.usfirst.frc.team4511.robot.commands.HugRelease;
+import org.usfirst.frc.team4511.robot.commands.HugStop;
+import org.usfirst.frc.team4511.robot.commands.SuccIn;
+import org.usfirst.frc.team4511.robot.commands.SuccOut;
+import org.usfirst.frc.team4511.robot.commands.SuccStop;
 import org.usfirst.frc.team4511.robot.commands.AutoStraight;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseLeftGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseRightGroup;
@@ -30,7 +38,7 @@ import org.usfirst.frc.team4511.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4511.robot.subsystems.Hugger;
 import org.usfirst.frc.team4511.robot.subsystems.Lifter;
 import org.usfirst.frc.team4511.robot.subsystems.PhotoEye;
-import org.usfirst.frc.team4511.robot.subsystems.Sonar;
+//import org.usfirst.frc.team4511.robot.subsystems.Sonar;
 import org.usfirst.frc.team4511.robot.subsystems.Succ;
 import org.usfirst.frc.team4511.robot.subsystems.Winch;
 
@@ -53,7 +61,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static final DriveTrain soulTrain = new DriveTrain();
-	public static final Sonar pulseFront = new Sonar(3, 2);
+	//public static final Sonar pulseFront = new Sonar(3, 2);
 	public static final Lifter lifty = new Lifter();
 	/*public static final DriveTest drive = new DriveTest();
 	*/
@@ -128,7 +136,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
+		new HugStop();
+		new SuccStop();
 	}
 
 	@Override
@@ -141,6 +151,9 @@ public class Robot extends IterativeRobot {
 		
 		Hugger.huggerLeft.getSensorCollection().setQuadraturePosition(0, 10);
 		Hugger.huggerRight.getSensorCollection().setQuadraturePosition(0, 10);
+
+		
+
 	}
 
 	/**
@@ -177,7 +190,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		
-		soulTrain.checkLeftEncoder();
+		DriveTrain.checkLeftEncoder();
+		DriveTrain.checkRightEncoder();
 		
 		Scheduler.getInstance().run();
 		
@@ -210,6 +224,8 @@ public class Robot extends IterativeRobot {
 		//drive.checkDriveTestEncoder();
 		soulTrain.checkLeftEncoder();
 		
+		hugger.checkEncoder();
+		
 		compass = soulTrain.gyro.getAngle();
 		if(compass > 360.0 || compass < -360.0) {
 			soulTrain.gyro.reset();
@@ -221,6 +237,17 @@ public class Robot extends IterativeRobot {
 		} else {
 			SmartDashboard.putBoolean("Is this working?", false);
 		}*/
+		
+		SmartDashboard.putData("AutoHug", new AutoHug());
+		SmartDashboard.putData("AutoHugRelease", new AutoHugRelease());
+		
+		SmartDashboard.putData("Hug Stop", new HugStop());
+		
+		SmartDashboard.putData("SuccIn", new SuccIn());
+		SmartDashboard.putData("SuccOut", new SuccOut());
+		
+		SmartDashboard.putData("Hug in", new Hug());
+		SmartDashboard.putData("Hug release", new HugRelease());
 		
 	}
 
