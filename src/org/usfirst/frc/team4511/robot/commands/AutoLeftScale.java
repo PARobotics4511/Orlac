@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCloseLeftGroup extends CommandGroup {
-	//-angle = turn right, +angle = turn left
-    public AutoCloseLeftGroup() {
+public class AutoLeftScale extends CommandGroup {
+
+    public AutoLeftScale() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -16,17 +16,12 @@ public class AutoCloseLeftGroup extends CommandGroup {
     	addSequential(new AutoLiftUp());
     	addSequential(new AutoHug());
     	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
-    	addParallel(new AutoStraight(90, 0.6)); //start driving toward near switch
+    	addParallel(new AutoStraight(260, 0.6)); //start driving toward scale
     	
     	addSequential(new AutoEncoderTurn(-90, 0.6));
-    	addSequential(new AutoStraight(12, 0.6));
+    //	addSequential(new AutoStraight(12, 0.6));
     	addParallel(new AutoHugRelease());
     	addParallel(new AutoSuccOut());
-    	//New edits start here
-    	/*addSequential(new AutoLiftUp());
-    	addSequential(new AutoHugRelease());
-    	addSequential(new AutoStraight(-1, 0.6));
-    	addSequential(new AutoLiftDown());*/
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

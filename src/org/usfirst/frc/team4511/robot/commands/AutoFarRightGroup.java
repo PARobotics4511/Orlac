@@ -13,7 +13,7 @@ public class AutoFarRightGroup extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	addSequential(new AutoStraight(distance, speed));
-    	addSequential(new AutoTurn(angle, speed));
+    	addSequential(new AutoEncoderTurn(angle, speed));
     	//New edits
     	addSequential(new AutoLiftUp());
     	addSequential(new AutoHugRelease());

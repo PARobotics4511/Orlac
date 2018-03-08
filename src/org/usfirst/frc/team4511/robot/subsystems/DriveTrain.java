@@ -54,18 +54,18 @@ public class DriveTrain extends Subsystem {
 	
 	public static double checkRightEncoder() {
 		rCount = rightDriveEncoder.get();
-		rDriveDistance = rightDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+		rDriveDistance = rightDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5 / 12; //let's make it inches actually
 		
-		SmartDashboard.putNumber("Right Distance (ft)", rDriveDistance);
+		SmartDashboard.putNumber("Right Distance (in)", rDriveDistance);
 		
 		return rDriveDistance;
 	}
 	public static double checkLeftEncoder() {
 		//6 inch wheels
-		rCount = rightDriveEncoder.get();
-		rDriveDistance = rightDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+		rCount = leftDriveEncoder.get();
+		rDriveDistance = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5 / 12; //inches
 		
-		SmartDashboard.putNumber("Right Distance (ft)", rDriveDistance);
+		SmartDashboard.putNumber("Right Distance (in)", rDriveDistance);
 		
 	
 		
@@ -73,11 +73,20 @@ public class DriveTrain extends Subsystem {
 		//SmartDashboard.putNumber("Left Motor", lCount); //360 cycles per revolution, 1440 pulses per revolution
 		
 		SmartDashboard.putNumber("Right Motor", rCount);
+		lDriveDistance = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5 / 12; //inches
+		
+		return lDriveDistance;
 		
 		
-		lDriveDistance = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5;
+	}
+	
+	public static double checkAverageEncoder() {
 		
-		SmartDashboard.putNumber("Left distance (ft)", lDriveDistance);
+		rDriveDistance = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5 / 12; //inches
+
+		lDriveDistance = leftDriveEncoder.getDistance() / 1440.0 * 3.14159 * 0.5 / 12; //inches
+
+		SmartDashboard.putNumber("Left distance (in)", lDriveDistance);
 		
 		double averageDistance = lDriveDistance + rDriveDistance / 2;
 		

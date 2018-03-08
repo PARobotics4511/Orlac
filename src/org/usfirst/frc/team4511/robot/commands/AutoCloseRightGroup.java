@@ -7,18 +7,20 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoCloseRightGroup extends CommandGroup {
 
-    public AutoCloseRightGroup(double distance, double angle, double speed) {
+    public AutoCloseRightGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addSequential(new AutoStraight(distance, speed));
-    	addSequential(new AutoTurn(angle, speed));
-    	//New edits
     	addSequential(new AutoLiftUp());
-    	addSequential(new AutoHugRelease());
-    	addSequential(new AutoStraight(-1, 0.6));
-    	addSequential(new AutoLiftDown());
+    	addSequential(new AutoHug());
+    	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
+    	addParallel(new AutoStraight(90, 0.6)); //start driving toward near switch
+    	
+    	addSequential(new AutoEncoderTurn(90, 0.6));
+    	addSequential(new AutoStraight(12, 0.6));
+    	addParallel(new AutoHugRelease());
+    	addParallel(new AutoSuccOut());
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

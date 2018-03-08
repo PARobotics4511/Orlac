@@ -5,28 +5,24 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCloseLeftGroup extends CommandGroup {
-	//-angle = turn right, +angle = turn left
-    public AutoCloseLeftGroup() {
+public class AutoEscapeCenterRight extends CommandGroup {
+	//want it to move so that it doesn't collide with other robots
+    public AutoEscapeCenterRight() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
     	
+    	//--PICK UP BLOCK---
     	addSequential(new AutoLiftUp());
     	addSequential(new AutoHug());
     	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
-    	addParallel(new AutoStraight(90, 0.6)); //start driving toward near switch
     	
-    	addSequential(new AutoEncoderTurn(-90, 0.6));
-    	addSequential(new AutoStraight(12, 0.6));
-    	addParallel(new AutoHugRelease());
-    	addParallel(new AutoSuccOut());
-    	//New edits start here
-    	/*addSequential(new AutoLiftUp());
-    	addSequential(new AutoHugRelease());
-    	addSequential(new AutoStraight(-1, 0.6));
-    	addSequential(new AutoLiftDown());*/
+    	//--START MOVIN---
+    	addSequential(new AutoEncoderTurn(-90, 0.5));
+    	addSequential(new AutoStraight(120, 0.7));
+    	addSequential(new AutoEncoderTurn(90, 0.5));
+    	addSequential(new AutoStraight(50, 0.7));
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

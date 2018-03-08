@@ -16,14 +16,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import openrio.powerup.MatchData.GameFeature;
 
 import org.usfirst.frc.team4511.robot.commands.AutoDrive;
+import org.usfirst.frc.team4511.robot.commands.AutoEscapeCenterLeft;
+import org.usfirst.frc.team4511.robot.commands.AutoEscapeCenterRight;
 import org.usfirst.frc.team4511.robot.commands.AutoFarLeftGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoFarRightGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoHug;
 import org.usfirst.frc.team4511.robot.commands.AutoHugRelease;
+import org.usfirst.frc.team4511.robot.commands.AutoLeftScale;
+import org.usfirst.frc.team4511.robot.commands.AutoRightScale;
 import org.usfirst.frc.team4511.robot.commands.AutoTurn;
 import org.usfirst.frc.team4511.robot.commands.EvenNow;
+import org.usfirst.frc.team4511.robot.commands.GameFeatureSide;
 import org.usfirst.frc.team4511.robot.commands.Hug;
 import org.usfirst.frc.team4511.robot.commands.HugRelease;
 import org.usfirst.frc.team4511.robot.commands.HugStop;
@@ -31,6 +37,7 @@ import org.usfirst.frc.team4511.robot.commands.SuccIn;
 import org.usfirst.frc.team4511.robot.commands.SuccOut;
 import org.usfirst.frc.team4511.robot.commands.SuccStop;
 import org.usfirst.frc.team4511.robot.commands.AutoStraight;
+import org.usfirst.frc.team4511.robot.commands.AutoStraightWithBlock;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseLeftGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseRightGroup;
 import org.usfirst.frc.team4511.robot.subsystems.DriveTrain;
@@ -109,15 +116,94 @@ public class Robot extends IterativeRobot {
 		m_chooser.addObject("Auto Turn", new AutoTurn(rotateAngle, speed));*/
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
-		String gameData;
+		
+		//NEAREST SWITCH-------------------------------------------------------
+		
+		
+		m_chooser.addObject("Left Side, Nearest Switch Preferred", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoCloseLeftGroup(), // if our switch is on the left side
+			    new GameFeatureSide(
+                        GameFeature.SCALE,
+                        new AutoLeftScale(),
+                        new AutoStraightWithBlock() //just pass the baseline with a block in the robot ready to go
+                ) // if our switch is on the opposite side
+			));
+		
+		/*m_chooser.addObject("Center, Nearest Switch Preferred", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoCloseLeftGroup(),
+			    new AutoCloseRightGroup()
+			));*/
+		
+		m_chooser.addObject("Right Side, Nearest Switch Preferred", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new GameFeatureSide(
+                        GameFeature.SCALE,
+                        new AutoStraightWithBlock(),
+                        new AutoRightScale() //if our side of the scale is on the right
+                ), // if our switch is on the opposite side
+			    new AutoCloseRightGroup()
+			));
+		
+		
+		//PASS BASELINE----------------------------------------------------------
+		
+		m_chooser.addObject("Left Pass Baseline", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoStraightWithBlock(),
+			    new AutoStraightWithBlock()
+			));
+		
+		
+		
+		m_chooser.addObject("Center Pass Baseline", new GameFeatureSide( //within cells interlinked
+			    GameFeature.SWITCH_NEAR,
+			    new AutoEscapeCenterLeft(),
+			    new AutoEscapeCenterRight()
+			));
+		
+		m_chooser.addObject("Right Pass Baseline", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoStraightWithBlock(),
+			    new AutoStraightWithBlock()
+			));
+		
+		
+		
+		
+		//FAR SWITCH-------------------------------------------------------------
+		
+		/*
+		m_chooser.addObject("Left Side, Far Switch Preferred", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoCloseLeftGroup(),
+			    new AutoCloseRightGroup()
+			));
+
+	
+		
+		m_chooser.addObject("Center, Far Switch", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoCloseLeftGroup(),
+			    new AutoCloseRightGroup()
+			));
+		
+		m_chooser.addObject("Right Side, Far Switch Preferred", new GameFeatureSide(
+			    GameFeature.SWITCH_NEAR,
+			    new AutoCloseLeftGroup(),
+			    new AutoCloseRightGroup()
+			));
+
+		/*String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
-			m_chooser.addDefault("Go Left", new AutoCloseLeftGroup(3, 90, 0.7));
+			m_chooser.addDefault("Go Left", new AutoCloseLeftGroup());
 			SmartDashboard.putData("Auto mode", m_chooser);
 		} else {
-			m_chooser.addDefault("Go Right", new AutoCloseRightGroup(3, -90, 0.7));
+			m_chooser.addDefault("Go Right", new AutoCloseRightGroup());
 			SmartDashboard.putData("Auto mode", m_chooser);
-		}
+		}*/
 		
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
