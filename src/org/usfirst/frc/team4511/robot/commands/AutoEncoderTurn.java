@@ -15,8 +15,8 @@ public class AutoEncoderTurn extends Command {
 	public double goAngle;
 	public double goSpeed;
 	
-	
-	public double wheelSpace = 14; //inches
+	public double fractionOfCircle;
+	public double wheelSpace = 14; //inches (radius)
     public AutoEncoderTurn(double degrees, double speed) {
     	   // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -25,14 +25,16 @@ public class AutoEncoderTurn extends Command {
     	goAngle = degrees; //degrees!
     	
     	//convert to radians
-    	goAngle = 2*3.14159 / goAngle; //radians
-    	
+    	//goAngle = 2*3.14159 / goAngle; //radians
+    	fractionOfCircle = goAngle / 360;
     	goSpeed = speed; //ranges -1 to 1
     }
 
     protected double getArcDistance(double goAngle) {
     	double circleCircumference = 2 * 3.14159 * wheelSpace;
-    	double goDistance = circleCircumference * goAngle;
+    	SmartDashboard.putNumber("Fraction of circle to travel", fractionOfCircle);
+    	double goDistance = circleCircumference * fractionOfCircle / 12;
+    	SmartDashboard.putNumber("Arc length to travel", goDistance);
     	return Math.abs(goDistance);
     }
     // Called just before this Command runs the first time
@@ -48,9 +50,9 @@ public class AutoEncoderTurn extends Command {
     protected void execute() {
     	if(goAngle >= 0) { //turn left (counterclockwise)
 	    	while(true) {
-	    	DriveTrain.drive(0, goSpeed);
+	    	DriveTrain.drive(goSpeed, -goSpeed);
 	    	//DriveTrain.checkLeftEncoder();
-		    	if(DriveTrain.checkRightEncoder() > goDistance || DriveTrain.checkRightEncoder() < -goDistance ) {
+		    	if(DriveTrain.checkLeftEncoder() > getArcDistance(goAngle) || DriveTrain.checkLeftEncoder() < -getArcDistance(goAngle) ) {
 		    		DriveTrain.drive(0, 0);
 		    		isFinished();
 		    		break;
@@ -58,9 +60,9 @@ public class AutoEncoderTurn extends Command {
 	    	}
     	} else { // turn right
 	    	while(true) {
-	    	DriveTrain.drive(goSpeed, 0);
+	    	DriveTrain.drive(goSpeed, -goSpeed);
 	    	//DriveTrain.checkLeftEncoder();
-		    	if(DriveTrain.checkLeftEncoder() > goDistance || DriveTrain.checkLeftEncoder() < -goDistance ) {
+		    	if(DriveTrain.checkLeftEncoder() > getArcDistance(goAngle) || DriveTrain.checkLeftEncoder() < -getArcDistance(goAngle) ) {
 		    		DriveTrain.drive(0, 0);
 		    		isFinished();
 		    		break;
@@ -83,6 +85,8 @@ public class AutoEncoderTurn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+		DriveTrain.leftDriveEncoder.reset();
+		DriveTrain.rightDriveEncoder.reset();
     }
 
     // Called when another command which requires one or more of the same

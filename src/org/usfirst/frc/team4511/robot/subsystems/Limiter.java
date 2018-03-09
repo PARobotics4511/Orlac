@@ -28,6 +28,7 @@ public class Limiter extends Subsystem {
 	
 	public boolean isSwitchSet() {
 		SmartDashboard.putBoolean("Limit Switch set?", !limitSwitch.get());
+		
 		return !limitSwitch.get();
 	}
 	

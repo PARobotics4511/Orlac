@@ -14,15 +14,15 @@ public class AutoEscapeCenterLeft extends CommandGroup {
     	//t know what to do and everything is blurry and yeah
     	
     	//--PICK UP BLOCK---
-    	addSequential(new AutoLiftUp());
+    	/*addSequential(new AutoLiftUp());
     	addSequential(new AutoHug());
-    	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
+    	addParallel(new AutoLiftUp()); */ //throw a parameter in there to specify how long it should lift for
     	
     	//--START MOVIN---
-    	addParallel(new AutoEncoderTurn(90, 0.5));
-    	addSequential(new AutoStraight(120, 0.7));
-    	addSequential(new AutoEncoderTurn(-90, 0.5));
-    	addSequential(new AutoStraight(50, 0.7));
+    	addSequential(new AutoEncoderTurn(430, 0.7));
+    	addSequential(new AutoStraight(10, 0.7));
+    	addSequential(new AutoEncoderTurn(70, 0.7));
+    	addSequential(new AutoStraight(10, 0.7));
     	
     	//lets you snake through that stuff and layer up some other commands
     	

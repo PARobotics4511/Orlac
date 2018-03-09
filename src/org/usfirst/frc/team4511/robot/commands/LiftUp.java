@@ -24,11 +24,14 @@ public class LiftUp extends Command {
     protected void initialize() {
     	//Robot.lifty.initializeTopCounter();
     	//Robot.lifty.liftUp();
+    	setTimeout(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.lifty.liftUp();
+    
+    	Lifter.initializeBottomCounter();
     	
     	//Robot.lifty.checkEncoder();
     	//Encoder lifterEncoder = new Encoder(3, 4, true, EncodingType.k4X);
@@ -36,18 +39,18 @@ public class LiftUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+    	return false;
         //return Robot.lifty.isTopSwitchSet();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.lifty.liftStop();
+    	//Robot.lifty.liftStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	//end();
     }
 }

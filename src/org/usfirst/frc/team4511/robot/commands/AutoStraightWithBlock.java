@@ -14,10 +14,10 @@ public class AutoStraightWithBlock extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	
-    	addSequential(new AutoLiftUp());
-    	addSequential(new AutoHug());
-    	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
-    	addParallel(new AutoStraight(120, 0.6)); //pass the baseline
+    	//addSequential(new AutoLiftUp());
+    	//addSequential(new AutoHug());
+    	//addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
+    	addSequential(new AutoStraight(10, 0.7)); //pass the baseline
     	
         // To run multiple commands at the same time,
         // use addParallel()

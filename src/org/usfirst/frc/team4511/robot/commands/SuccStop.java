@@ -22,8 +22,8 @@ public class SuccStop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Succ.succCubeUno.set(0);
-    	Succ.succCubeDos.set(0);
+    	Succ.succCubeLeft.set(0);
+    	Succ.succCubeRight.set(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

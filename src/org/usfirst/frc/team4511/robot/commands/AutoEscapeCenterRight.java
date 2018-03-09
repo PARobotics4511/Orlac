@@ -14,15 +14,15 @@ public class AutoEscapeCenterRight extends CommandGroup {
         // these will run in order.
     	
     	//--PICK UP BLOCK---
-    	addSequential(new AutoLiftUp());
+    	/*addSequential(new AutoLiftUp());
     	addSequential(new AutoHug());
-    	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
+    	addParallel(new AutoLiftUp());*/ //throw a parameter in there to specify how long it should lift for
     	
     	//--START MOVIN---
-    	addSequential(new AutoEncoderTurn(-90, 0.5));
-    	addSequential(new AutoStraight(120, 0.7));
-    	addSequential(new AutoEncoderTurn(90, 0.5));
-    	addSequential(new AutoStraight(50, 0.7));
+    	addSequential(new AutoEncoderTurn(70, 0.7));
+    	addSequential(new AutoStraight(10, 0.7));
+    	addSequential(new AutoEncoderTurn(430, 0.7));
+    	addSequential(new AutoStraight(10, 0.7));
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

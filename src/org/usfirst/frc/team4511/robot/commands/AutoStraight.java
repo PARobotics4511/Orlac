@@ -26,6 +26,7 @@ public class AutoStraight extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	SmartDashboard.putString("Status:", "i SHALL move to the closest switch on the LEfT THANKS!!");
+    	setTimeout(15);
     }
 
     protected double averageDistance() {
@@ -35,25 +36,33 @@ public class AutoStraight extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-
-    	while(true) {
-    	DriveTrain.drive(goSpeed, goSpeed);
-    	//DriveTrain.checkLeftEncoder();
-    	if(DriveTrain.checkLeftEncoder() > goDistance || DriveTrain.checkLeftEncoder() < -goDistance ) {
-    		DriveTrain.drive(0, 0);
+    	if(goDistance == 0) {
     		isFinished();
-    		break;
-    	}
-    	}
+    	} else {
     	
+	    	while(true) {
+		    	DriveTrain.drive(goSpeed, goSpeed * 0.9);
+		    	//DriveTrain.checkLeftEncoder();
+		    	if(DriveTrain.checkLeftEncoder() > goDistance || DriveTrain.checkLeftEncoder() < -goDistance || isTimedOut()) {
+		    		DriveTrain.drive(0, 0);
+		    		isFinished();
+		    		break;
+		    	}
+	    	}
     	
+    	}
     	/*try{ 
         	Thread.sleep(7000);
         }catch(InterruptedException e){
         	Thread.currentThread().interrupt();	
         }*/
     }
-
+    
+    
+    protected void preventDrift() {
+    	//if(DriveTrain.checkLeftEncoder())
+    }
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;
@@ -61,6 +70,8 @@ public class AutoStraight extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+		DriveTrain.leftDriveEncoder.reset();
+		DriveTrain.rightDriveEncoder.reset();
     }
 
     // Called when another command which requires one or more of the same

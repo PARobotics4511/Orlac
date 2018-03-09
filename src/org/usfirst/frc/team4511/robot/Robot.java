@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import openrio.powerup.MatchData.GameFeature;
 
 import org.usfirst.frc.team4511.robot.commands.AutoDrive;
+import org.usfirst.frc.team4511.robot.commands.AutoEncoderTurn;
 import org.usfirst.frc.team4511.robot.commands.AutoEscapeCenterLeft;
 import org.usfirst.frc.team4511.robot.commands.AutoEscapeCenterRight;
 import org.usfirst.frc.team4511.robot.commands.AutoFarLeftGroup;
@@ -26,16 +27,21 @@ import org.usfirst.frc.team4511.robot.commands.AutoFarRightGroup;
 import org.usfirst.frc.team4511.robot.commands.AutoHug;
 import org.usfirst.frc.team4511.robot.commands.AutoHugRelease;
 import org.usfirst.frc.team4511.robot.commands.AutoLeftScale;
+import org.usfirst.frc.team4511.robot.commands.AutoLiftDown;
+import org.usfirst.frc.team4511.robot.commands.AutoLiftUp;
 import org.usfirst.frc.team4511.robot.commands.AutoRightScale;
 import org.usfirst.frc.team4511.robot.commands.AutoTurn;
+import org.usfirst.frc.team4511.robot.commands.DriveStop;
 import org.usfirst.frc.team4511.robot.commands.EvenNow;
 import org.usfirst.frc.team4511.robot.commands.GameFeatureSide;
 import org.usfirst.frc.team4511.robot.commands.Hug;
 import org.usfirst.frc.team4511.robot.commands.HugRelease;
 import org.usfirst.frc.team4511.robot.commands.HugStop;
+import org.usfirst.frc.team4511.robot.commands.LiftStop;
 import org.usfirst.frc.team4511.robot.commands.SuccIn;
 import org.usfirst.frc.team4511.robot.commands.SuccOut;
 import org.usfirst.frc.team4511.robot.commands.SuccStop;
+import org.usfirst.frc.team4511.robot.commands.WinchStop;
 import org.usfirst.frc.team4511.robot.commands.AutoStraight;
 import org.usfirst.frc.team4511.robot.commands.AutoStraightWithBlock;
 import org.usfirst.frc.team4511.robot.commands.AutoCloseLeftGroup;
@@ -101,8 +107,8 @@ public class Robot extends IterativeRobot {
 		double rotateAngle = prefs.getDouble("Angle of rotation (- = left, + = right)", 90);
 		double speed = prefs.getDouble("Speed", 0.6);
 		
-		/*m_chooser.addDefault("My Auto", new AutoDrive());
-		m_chooser.addObject("Go Straight", new AutoStraight(goCloseStraightDistance, speed));
+		m_chooser.addDefault("Do Nothing", new AutoStraight(0,0));
+		/*m_chooser.addObject("Go Straight", new AutoStraight(goCloseStraightDistance, speed));
 		
 		m_chooser.addObject("Go Close Left Group", new AutoCloseLeftGroup(2, -90.0, 0.8));
 		m_chooser.addObject("Go Close Right Group", new AutoCloseRightGroup(2, 90.0, 0.8));
@@ -118,6 +124,7 @@ public class Robot extends IterativeRobot {
 		
 		
 		//NEAREST SWITCH-------------------------------------------------------
+		
 		
 		
 		m_chooser.addObject("Left Side, Nearest Switch Preferred", new GameFeatureSide(
@@ -205,7 +212,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putData("Auto mode", m_chooser);
 		}*/
 		
-		SmartDashboard.putData("Auto mode", m_chooser);
+	//	SmartDashboard.putData("Auto mode", m_chooser);
 		
 		CameraServer cam = CameraServer.getInstance();
 	    cam.startAutomaticCapture("Cam", 0);
@@ -233,7 +240,15 @@ public class Robot extends IterativeRobot {
 		//Lifter.lifterMotor.getSensorCollection().setQuadraturePosition(0, 10);
 		soulTrain.gyro.reset();
 		//drive.driveTestEncoder.reset();
-		soulTrain.leftDriveEncoder.reset();
+		DriveTrain.leftDriveEncoder.reset();
+		DriveTrain.rightDriveEncoder.reset();
+		
+		new HugStop();
+		new LiftStop();
+		new WinchStop();
+		new SuccStop();
+		new DriveStop();
+		
 		
 		Hugger.huggerLeft.getSensorCollection().setQuadraturePosition(0, 10);
 		Hugger.huggerRight.getSensorCollection().setQuadraturePosition(0, 10);
@@ -256,8 +271,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
-
+		
+		DriveTrain.leftDriveEncoder.reset();
+		DriveTrain.rightDriveEncoder.reset();
+		
 		/*
+		 * 
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
@@ -308,9 +327,12 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		//lifty.checkEncoder();
 		//drive.checkDriveTestEncoder();
-		soulTrain.checkLeftEncoder();
+		DriveTrain.checkLeftEncoder();
+		DriveTrain.checkRightEncoder();
 		
 		hugger.checkEncoder();
+		
+		SmartDashboard.putBoolean("Bottom limit switch set?", Lifter.isBottomSwitchSet());
 		
 		compass = soulTrain.gyro.getAngle();
 		if(compass > 360.0 || compass < -360.0) {
@@ -326,6 +348,12 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("AutoHug", new AutoHug());
 		SmartDashboard.putData("AutoHugRelease", new AutoHugRelease());
+		
+		SmartDashboard.putData("AutoDriveStraight", new AutoStraight(12,0.7));
+		SmartDashboard.putData("AutoEncoderTurn", new AutoEncoderTurn(90, 0.7));
+		
+		SmartDashboard.putData("AutoLiftUp", new AutoLiftUp());
+		SmartDashboard.putData("AutoLiftDown", new AutoLiftDown());
 		
 		SmartDashboard.putData("Hug Stop", new HugStop());
 		

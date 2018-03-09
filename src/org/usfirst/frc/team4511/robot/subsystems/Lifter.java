@@ -20,12 +20,12 @@ public class Lifter extends Subsystem {
 
 	
 	//Top Limit Switch
-	DigitalInput topLimitSwitch = new DigitalInput(7);
-	Counter counterTop = new Counter(topLimitSwitch);
+	//DigitalInput topLimitSwitch = new DigitalInput(7);
+//	Counter counterTop = new Counter(topLimitSwitch);
 	
 	//Bottom Limit switch
-	DigitalInput bottomLimitSwitch = new DigitalInput(9);
-	Counter counterBottom = new Counter(bottomLimitSwitch);
+	static DigitalInput bottomLimitSwitch = new DigitalInput(9);
+	static Counter counterBottom = new Counter(bottomLimitSwitch);
 	
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -46,7 +46,7 @@ public class Lifter extends Subsystem {
 	//System.out.println(currentCount);
 	
 	//-----Top Limit----------------
-	public boolean isTopSwitchSet() {
+	/*public boolean isTopSwitchSet() {
 		return counterTop.get() > 0;
 		//SmartDashboard.putBoolean("Switch Set?", !topLimitSwitch.get());
 		
@@ -56,14 +56,16 @@ public class Lifter extends Subsystem {
 		counterTop.reset();
 	}
 	
-	
+	*/
 	
 	//-----Bottom Limit---------------
-	public boolean isBottomSwitchSet() {
+	public static boolean isBottomSwitchSet() {
+		
 		return counterBottom.get() > 0;
+		//SmartDashboard.putNumber("Switch Set?", bottomLimitSwitch.get());
 	}
 	
-	public void initializeBottomCounter() {
+	public static void initializeBottomCounter() {
 		counterBottom.reset();
 	}
 	
@@ -72,11 +74,11 @@ public class Lifter extends Subsystem {
 	}
 	
 	public void liftUp() {
-		lifterMotor.set(0.5);
+		lifterMotor.set(-0.9);
 	}
 	
 	public void liftDown() {
-		lifterMotor.set(-0.5);
+		lifterMotor.set(0.9);
 	}
 	
 	/*public void winchUp() {
@@ -85,13 +87,13 @@ public class Lifter extends Subsystem {
 	
 	public void checkEncoder() {
 		
-		SmartDashboard.putNumber("Top Limit switch count", (double)counterTop.get());
-		SmartDashboard.putNumber("Lifter position weee", lifterMotor.getSelectedSensorPosition(0) * 2.0); //4096 units per rotation
+		//SmartDashboard.putNumber("Top Limit switch count", (double)counterTop.get());
+		SmartDashboard.putNumber("Lifter position weee", lifterMotor.getSelectedSensorPosition(0)); //4096 units per rotation
 		
 		RPM = lifterMotor.getSelectedSensorVelocity(0) * (600.0/4096.0);
 		SmartDashboard.putNumber("Lifter RPM", RPM);
 		linearVelocity = 8.0 * 3.14159 / 12 * RPM / 60;
-		SmartDashboard.putNumber("Lifter velocity", linearVelocity);
+		//SmartDashboard.putNumber("Lifter velocity", linearVelocity);
 		
 		
 		//double linearVelocity = 6.0 * 60.0 * 3.141 * (2.0/3.0);

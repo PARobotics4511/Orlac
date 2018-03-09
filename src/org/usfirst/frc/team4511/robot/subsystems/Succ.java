@@ -17,22 +17,22 @@ public class Succ extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public static WPI_TalonSRX succCubeUno = new WPI_TalonSRX(RobotMap.succCubeUno);
-	public static WPI_TalonSRX succCubeDos = new WPI_TalonSRX(RobotMap.succCubeDos);
+	public static WPI_TalonSRX succCubeLeft = new WPI_TalonSRX(RobotMap.succCubeLeft);
+	public static WPI_TalonSRX succCubeRight = new WPI_TalonSRX(RobotMap.succCubeRight);
 	
 	public void succIn() {
-		succCubeUno.set(-0.5);
-		succCubeDos.set(0.5);
+		succCubeLeft.set(-0.5);
+		succCubeRight.set(-0.5);
 	}
 	
 	public void succOut() {
-		succCubeUno.set(0.5);
-		succCubeDos.set(-0.5);
+		succCubeLeft.set(0.5);
+		succCubeRight.set(0.5);
 	}
 	
 	public void succStop() {
-		succCubeUno.set(0);
-		succCubeDos.set(0);
+		succCubeLeft.set(0);
+		succCubeRight.set(0);
 	}
 
     public void initDefaultCommand() {

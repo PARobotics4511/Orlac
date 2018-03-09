@@ -8,6 +8,7 @@
 package org.usfirst.frc.team4511.robot;
 
 import org.usfirst.frc.team4511.robot.commands.AutoHug;
+import org.usfirst.frc.team4511.robot.commands.AutoHugRelease;
 import org.usfirst.frc.team4511.robot.commands.Hug;
 import org.usfirst.frc.team4511.robot.commands.HugRelease;
 import org.usfirst.frc.team4511.robot.commands.HugStop;
@@ -69,8 +70,14 @@ public class OI {
 		JoystickButton butt7 = new JoystickButton(stick1, 2);
 		JoystickButton butt8 = new JoystickButton(stick2, 2);
 		
+		JoystickButton joy8 = new JoystickButton(stick1,8);
+		JoystickButton joy9 = new JoystickButton(stick1,9);
+		
 		JoystickButton y = new JoystickButton(gamepad, 4);
-		JoystickButton a = new JoystickButton(gamepad, 1);
+		JoystickButton a = new JoystickButton(gamepad, 2);
+		
+		JoystickButton x = new JoystickButton(gamepad, 1);
+		JoystickButton b = new JoystickButton(gamepad, 3);
 		
 		JoystickButton leftBumper = new JoystickButton(gamepad, 5);
 		JoystickButton rightBumper = new JoystickButton(gamepad, 6);
@@ -78,12 +85,17 @@ public class OI {
 		JoystickButton gameLeftTrigger = new JoystickButton(gamepad, 7);
 		JoystickButton gameRightTrigger = new JoystickButton(gamepad, 8);
 		
+		joy8.whenPressed(new LiftUp());
+		joy9.whenPressed(new LiftDown());
 		
-		gameLeftTrigger.whenPressed(new WinchUp());
-		gameRightTrigger.whenPressed(new WinchDown());
+		joy8.whenReleased(new LiftStop());
+		joy9.whenReleased(new LiftStop());
 		
-		gameLeftTrigger.whenReleased(new WinchStop());
-		gameRightTrigger.whenReleased(new WinchStop());
+		gameLeftTrigger.whenPressed(new LiftUp());
+		gameRightTrigger.whenPressed(new LiftDown());
+		
+		gameLeftTrigger.whenReleased(new LiftStop());
+		gameRightTrigger.whenReleased(new LiftStop());
 		
 		leftTrigger.whenPressed(new HugRelease());
 		rightTrigger.whenPressed(new AutoHug());
@@ -98,11 +110,11 @@ public class OI {
 		rightThree.whenReleased(new SuccStop());
 		
 		
-		leftBumper.whenPressed(new LiftDown());
-		rightBumper.whenPressed(new LiftUp());
+		leftBumper.whenPressed(new WinchUp());
+		rightBumper.whenPressed(new WinchDown());
 		
-		leftBumper.whenReleased(new LiftStop());
-		rightBumper.whenReleased(new LiftStop());
+		leftBumper.whenReleased(new WinchStop());
+		rightBumper.whenReleased(new WinchStop());
 		
 		//butt5.whenPressed(new SuccIn());
 		//butt6.whenPressed(new SuccOut());
@@ -113,11 +125,17 @@ public class OI {
 		//butt7.whenPressed(new Hug());
 		//butt8.whenPressed(new HugRelease());
 		
-		y.whenPressed(new Hug());
+		y.whenPressed(new Hug()); //this works!
 		a.whenPressed(new HugRelease());
 		
 		y.whenReleased(new HugStop());
 		a.whenReleased(new HugStop());
+		
+		b.whenPressed(new SuccIn());
+		x.whenPressed(new SuccOut());
+		
+		b.whenReleased(new SuccStop());
+		x.whenReleased(new SuccStop());
 		
 		//butt7.whenReleased(new HugStop());
 		//butt8.whenReleased(new HugStop());

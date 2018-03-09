@@ -16,7 +16,7 @@ public class AutoLeftScale extends CommandGroup {
     	addSequential(new AutoLiftUp());
     	addSequential(new AutoHug());
     	addParallel(new AutoLiftUp()); //throw a parameter in there to specify how long it should lift for
-    	addParallel(new AutoStraight(260, 0.6)); //start driving toward scale
+    	addParallel(new AutoStraight(270, 0.6)); //start driving toward scale
     	
     	addSequential(new AutoEncoderTurn(-90, 0.6));
     //	addSequential(new AutoStraight(12, 0.6));
